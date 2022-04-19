@@ -1,13 +1,13 @@
 import torch
 from torch.distributions import constraints
-from torch.distributions.distribution import Distribution
 from torch.distributions.transforms import Transform
+from pyro.distributions.torch_distribution import TorchDistribution
 from torch.distributions.utils import _sum_rightmost
 
 from relie import LocalDiffeoTransform
 
 
-class LocalDiffeoTransformedDistribution(Distribution):
+class LocalDiffeoTransformedDistribution(TorchDistribution):
     r"""
     Version of TransformedDistribution that allows for non-injective maps
     with a discrete inverse set.

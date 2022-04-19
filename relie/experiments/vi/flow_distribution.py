@@ -77,7 +77,7 @@ class Flow(nn.Module):
 
 
 class FlowDistribution(nn.Module):
-    def __init__(self, flow, algebra_support_radius=math.pi * 1.6):
+    def __init__(self, flow, algebra_support_radius=math.pi * 1.6, use_cuda=False):
         super().__init__()
         self.flow = flow
         self.register_buffer("prior_loc", torch.zeros(3))
@@ -89,6 +89,8 @@ class FlowDistribution(nn.Module):
             ]
         )
         self.algebra_support_radius = algebra_support_radius
+        if use_cuda:
+            self.to(torch.device('cuda:0'))
 
     def transforms(self):
         if self.algebra_support_radius <= math.pi:

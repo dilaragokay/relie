@@ -1,6 +1,6 @@
 import torch
 import torch.nn as nn
-from torch.distributions import Transform
+from torch.distributions import Transform, constraints
 
 
 class MLP(nn.Module):
@@ -83,6 +83,8 @@ class ToTransform(Transform):
 
     event_dim = 0
     sign = 1
+    domain = constraints.real
+    codomain = constraints.real
 
     def __init__(self, options_in, options_out):
         super().__init__(1)
