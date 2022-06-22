@@ -100,7 +100,7 @@ algebra_support_radius = np.pi * 1.1
 intermediate_transform = ComposeTransform(
     [
         RadialTanhTransform(algebra_support_radius),
-        ToTransform(dict(dtype=torch.float32), dict(dtype=torch.float64)),
+        # ToTransform(dict(dtype=torch.float32), dict(dtype=torch.float64)),
     ]
 )
 

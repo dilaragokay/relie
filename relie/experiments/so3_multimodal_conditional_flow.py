@@ -129,7 +129,7 @@ class FlowDistr(nn.Module):
         self.intermediate_transform = ComposeTransform(
             [
                 RadialTanhTransform(algebra_support_radius),
-                ToTransform(dict(dtype=torch.float32), dict(dtype=torch.float64)),
+                # ToTransform(dict(dtype=torch.float32), dict(dtype=torch.float64)),
             ]
         )
         self.algebra_support_radius = algebra_support_radius

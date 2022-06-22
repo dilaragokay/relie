@@ -85,12 +85,12 @@ class FlowDistribution(nn.Module):
         self.intermediate_transform = ComposeTransform(
             [
                 RadialTanhTransform(algebra_support_radius),
-                ToTransform(dict(dtype=torch.float32), dict(dtype=torch.float64)),
+                # ToTransform(dict(dtype=torch.float32), dict(dtype=torch.float64)),
             ]
         )
         self.algebra_support_radius = algebra_support_radius
         if use_cuda:
-            self.to(torch.device('cuda:0'))
+            self.to(torch.device('cuda:1'))
 
     def transforms(self):
         if self.algebra_support_radius <= math.pi:

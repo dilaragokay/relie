@@ -1,8 +1,8 @@
 import torch
 from torch.distributions import Normal
 
-from relie.flow import LocalDiffeoTransformedDistribution as LDTD, CouplingTransform
-from relie.lie_distr import SO3ExpTransform
+from relie import LocalDiffeoTransformedDistribution as LDTD, SO3ExpTransform
+from relie.flow import CouplingTransform
 from relie.utils.modules import MLP, BatchSqueezeModule, ToTransform
 
 

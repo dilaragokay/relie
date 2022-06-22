@@ -38,8 +38,12 @@ class LocalDiffeoTransformedDistribution(TorchDistribution):
         event_dim = max(
             [len(self.base_dist.event_shape)] + [t.event_dim for t in self.transforms]
         )
-        batch_shape = shape[: len(shape) - event_dim]
-        event_shape = shape[len(shape) - event_dim :]
+        #batch_shape = shape[: len(shape) - event_dim]
+        #event_shape = shape[len(shape) - event_dim :]
+        batch_shape = () 
+        event_shape = (3, 3)
+
+
         super().__init__(batch_shape, event_shape, validate_args=validate_args)
 
     @constraints.dependent_property
@@ -86,7 +90,7 @@ class LocalDiffeoTransformedDistribution(TorchDistribution):
 
     def _log_prob(self, y, transforms):
         # TODO: fix dtypes
-        event_dim = len(self.event_shape)
+        event_dim = len(self.event_shape) # 0
         assert torch.isnan(y).sum() == 0
         assert (y.abs() == float("inf")).any() == 0
         if not transforms:
@@ -100,6 +104,8 @@ class LocalDiffeoTransformedDistribution(TorchDistribution):
 
         if isinstance(transform, Transform):
             x = transform.inv(y)
+            # print("x: ", x.shape)
+            # print("y: ", y.shape)
             log_prob = -_sum_rightmost(
                 transform.log_abs_det_jacobian(x, y), event_dim - transform.event_dim
             )
@@ -108,6 +114,7 @@ class LocalDiffeoTransformedDistribution(TorchDistribution):
             assert torch.isnan(next_log_prob).sum() == 0
             sum_log_prob = log_prob.float() + next_log_prob.float()
             assert torch.isnan(sum_log_prob).sum() == 0
+            # print("sum_log_prob: ", sum_log_prob)
             return sum_log_prob
         else:
             x, xset, mask = transform.inverse_set(y)
